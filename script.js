@@ -6,8 +6,9 @@ var $newSender="";
 var $isSenderSet=false;
 var iswarning=false;
 var iserror=false;
-var isvalid=false;
+var isValid=false;
 var price={};
+var $Agent=""; 
 var total=0;
 $('input[name="consignment"]').keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
@@ -71,12 +72,17 @@ var mytable = $('#tblItems').DataTable({
 	"sDom": 'lfrtip'
 });
 $("form").submit(function (e) {
+	var isExist=false;
 	e.preventDefault();
 	if ( ! mytable.data().count() ) {
 		$isSenderSet=false;
 		$newSender="";
 	}
 	var	$id = $('input[name=consignment]').val();
+	if ($id=="") {
+		toastr.error('شماره بارنامه را وارد کنید !');
+		return 0;
+	}
 	if (!$isSenderSet) {
 		$sender=$('#tags').val();
 	}else{
@@ -89,11 +95,22 @@ $("form").submit(function (e) {
 	}
 	if ($id.substr(0,7)!=5410000 || $id.substr(14,3)!=101 ){
 		toastr.error('فرمت بارنامه درست نیست');
-		isvalid=false;
+		isValid=false;
 	}else{
-		isvalid=true;
+		isValid=true;
 	}
-	if (isvalid==true) {
+	$('#tblItems > tbody  > tr').each(function() {
+		var tblId =$(this).find("td:eq(1)").text();
+		if (tblId ==$id) {
+			toastr.error('بارنامه تکراری است !');
+			isExist=true;
+		}
+	});
+	if ($('#tags').val()=="") {
+		toastr.error('نماینده را مشخص کنید !');
+		return 0 ;
+	}
+	if (isValid==true && isExist==false) {
 		$.ajax({
 			type: "GET",
 			url: 'http://ip.jsontest.com/',
@@ -111,6 +128,8 @@ $("form").submit(function (e) {
 				mytable.order([ 0, 'desc']).draw();
 				rownum++;
 				price[$id] = value.price;
+				$("#tags").attr("disabled", "disabled"); 
+
 			},
 			failure: function (result) { alert('Fail'); 
 		}
@@ -126,32 +145,39 @@ $(document).on('click', 'button', function()
 	$target.hide('slow', function(){ $target.remove(); 
 		if ($('#tblItems tbody tr').length==0) {
 			mytable.clear().draw();
+			$("#tags").removeAttr("disabled"); 
 			rownum=1;
 		}
 		
 	});
 });
-$('#mainSubmit').click(function(e) {  
-console.log(price);
-total=0;
-$.each(price, function(key, value)
-{
-    total+=value;
-});
-console.log(total);
+$('#mainSubmit').click(function(e) { 
+	if (!mytable.rows().any()) {
+	toastr.error('اطلاعاتی وارد نکردید !');
+	return false;
+	}
+	total=0;
+	var consignment=[];
+	$.each(price, function(key, value)
+	{
+		total+=value;
+		consignment.push(key);
+	});
+	$json=JSON.stringify(consignment);
+	console.log( $json);
+	alert($Agent);
 });
 $('#reset').click(function(e) {  
 	location.reload();
 });
-var availableTags = [
-"کرج",
-"تهران",
-"قزوین",
-"گمرک",
-"لرستان",
-"خرمشهر",
-"مشهد"
-];
+var availableTags =  [
+{"label":"تهران", "id": 1}, 
+{"label":"کرج", "id": 2}, 
+{"label":"قزوین", "id": 3}];
 $( "#tags" ).autocomplete({
-	source: availableTags
+	source: availableTags,
+	focus: function( event, ui ) {
+		$Agent=ui.item.id; 
+		return false;
+	} 
 });
