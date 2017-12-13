@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link href='http://www.fontonline.ir/css/BYekan.css' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.2/noty.css" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+	<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<title>اسکن بارنامه</title>
+</head>
+<body dir="rtl">
+	<div class="inputContainer">
+		<form method="GET" id="form" action="#" >
+			<label class="label" for="consignment">شماره بارنامه :</label>
+			<input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="input"  type="text" name="consignment" autofocus placeholder="5410000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;101">
+			<div class="ui-widget" >
+				<label for="tags" class="label">نماینده : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+				<input id="tags">
+			</div>
+			<input type="submit" name="submit" style="display: none;">
+		</form>
+	</div>
+	<div class="inputContainer" style="width: 100%;margin-top: 50px"> 
+		<div style="margin: 0 auto; width: 80%;background-color: white;padding: 20px;border-radius: 4px;">
+			<table id="tblItems" class="display" cellspacing="0">
+				<thead>
+					<tr>
+						<th>ردیف</th>
+						<th>شماره بارنامه</th>
+						<th>ارزش کالا</th>
+						<th>هزینه</th>
+						<th>پیش کرایه / پس کرایه</th>
+						<th>نماینده</th>
+						<th>اقدامات</th>
+					</tr>
+				</thead>
+			</table>
+			<div id="reset">حذف همه</div>
+			<div id="mainSubmit">ثبت</div>
+			<div style="clear: both;"></div>
+		</div>
+
+	</div>
+</body>
+<footer>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.2/noty.min.js" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="script.js"></script>
+</footer>
+</html>
