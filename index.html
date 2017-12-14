@@ -9,6 +9,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 	<link rel="shortcut icon" type="image/png" href="favicon.png"/>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remodal/1.1.1/remodal.min.css" integrity="sha256-NIskOH7eNIjyJFpUeh3DlE9n1amcG/bzVKbWxuIgiH4=" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remodal/1.1.1/remodal-default-theme.min.css" integrity="sha256-iJlvlQFv31232zI/zrsL/jbuubLWWr/Bv99d+XfaC7Y=" crossorigin="anonymous" />
 	<title>اسکن بارنامه</title>
 </head>
 <body dir="rtl">
@@ -30,16 +32,20 @@
 					<tr>
 						<th>ردیف</th>
 						<th>شماره بارنامه</th>
-						<th>ارزش کالا</th>
-						<th>هزینه</th>
 						<th>پیش کرایه / پس کرایه</th>
 						<th>نماینده</th>
+						<th>کالای امانی</th>
+						<th>جمع کل</th>
+						<th>جمع کل + کالای امانی</th>
 						<th>اقدامات</th>
 					</tr>
 				</thead>
 			</table>
+
 			<div id="reset">حذف همه</div>
-			<div id="mainSubmit">ثبت نهایی</div>
+			<a href="#modal">
+				<div id="submit">ثبت نهایی</div>
+			</a>
 			<div style="clear: both;"></div>
 		</div>
 
@@ -51,6 +57,24 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.2/noty.min.js" ></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 	<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/remodal/1.1.1/remodal.min.js" integrity="sha256-tR7fz2fCeycqI9/V8mL9nyTc4lI14kg2Qm6zZHuupxE=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-animateNumber/0.0.14/jquery.animateNumber.min.js" integrity="sha256-GCAeRKCXFEtLTZ+gG1SCIrtGkYq1zZjMXkj+XUFNJqo=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="script.js"></script>
 </footer>
 </html>
+<div class="remodal" data-remodal-id="modal">
+	<button data-remodal-action="close" class="remodal-close"></button>
+	<h2>ثبت نهایی بارنامه ها</h2>
+	<div style="width: 100%;margin-bottom: 35px;margin-top: 30px">
+		<div style="float: left;width: 50%;height: 320px;padding: 2px;"	>
+			<h2>جمع کل کالای امانی</h2>
+			<p style="font-size: 19px;margin-top: 90px">ریال&nbsp;<span  style="font-size: 30px;color: #66bb6a" id="numberTotalCod"></span></p>
+		</div>
+		<div style="width: 50%;height: 320px;padding: 2px;border-left: 2px solid #66bb6a">
+			<h2>جمع کل هزینه</h2>
+			<p style="font-size: 19px;margin-top: 90px">ریال&nbsp;<span style="font-size: 30px;color: #66bb6a" id="numberTotalPrice"></span></p>
+		</div>
+	</div>
+	<button data-remodal-action="cancel" class="remodal-cancel">انصراف</button>
+	<button data-remodal-action="confirm" id="mainSubmit" class="remodal-confirm">ثبت</button>
+</div>

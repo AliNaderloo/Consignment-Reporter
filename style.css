@@ -8,7 +8,7 @@ body{
   height: 30px; width: 160px;padding-left: 10px;padding-right: 10px;font-size: 14px;border-radius: 6px;border: 2px solid #0778c4;
 margin-top: 10px;direction: rtl;text-align: right;
 }
-#mainSubmit{
+#submit{
   cursor: pointer;
   font-size: 16px;
   margin:0 auto;

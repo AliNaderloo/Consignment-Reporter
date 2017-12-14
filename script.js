@@ -8,8 +8,10 @@ var iswarning=false;
 var iserror=false;
 var isValid=false;
 var price={};
+var cod={};
 var $Agent="";
-var total=0;
+var totalPrice=0;
+var totalCod=0;
 var availableTags =  [];
 var agentNotExist=false;
 var colors = ['steelblue', 'salmon', 'lightcoral', 'cadetblue', 'dimgray', 'cornflowerblue', 'indianred', 'lightseagreen','#0881A3','#C06C84'];
@@ -25,7 +27,7 @@ String.prototype.toEnDigit = function() {
 	});
 };
 $('html').css("background-color",color);
-$('#mainSubmit').css("background-color",color);
+$('#submit').css("background-color",color);
 $('input[name="consignment"]').keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
@@ -88,11 +90,12 @@ var mytable = $('#tblItems').DataTable({
 	"sDom": 'lfrtip'
 });
 
-$(document).on('click', 'button', function()
+$('#tblItems').on('click', 'button', function()
 {
 	var	$btnId = $(this).attr('name');
 	$target=$(this).parent().parent();
 	delete 	price[$btnId];
+	delete  cod[$btnId];
 	$target.hide('slow', function(){ $target.remove(); 
 		if ($('#tblItems tbody tr').length==0) {
 			mytable.clear().draw();
@@ -101,17 +104,44 @@ $(document).on('click', 'button', function()
 		}
 	});
 });
-$('#mainSubmit').click(function(e) { 
+$('#submit').click(function(e) { 
 	if (!mytable.rows().any()) {
 		toastr.error('اطلاعاتی وارد نکردید !');
+		$("a[href='modal']").attr('disabled', true);
 		return false;
+	}else{
+		
+		var consignment=[];
+		totalPrice=0;
+		totalCod=0;
+		$.each(price, function(key, value)
+		{
+			totalPrice+=parseInt(value);
+			consignment.push(key);
+		});
+		$.each(cod, function(key, value)
+		{
+			totalCod+=parseInt(value);
+		});
+		$("a[href='modal']").attr('disabled', false);
+		$('#numberTotalPrice').text(totalPrice);
+		$('#numberTotalCod').text(totalCod);
+		
 	}
-	total=0;
+	
+});
+$('#mainSubmit').click(function(e) { 
 	var consignment=[];
+	totalPrice=0;
+	totalCod=0;
 	$.each(price, function(key, value)
 	{
-		total+=value;
+		totalPrice+=parseInt(value);
 		consignment.push(key);
+	});
+	$.each(cod, function(key, value)
+	{
+		totalCod+=parseInt(value);
 	});
 	$jsonConsignment=JSON.stringify(consignment);
 	$.ajax({
@@ -119,9 +149,9 @@ $('#mainSubmit').click(function(e) {
 		url: "http://api.parschapar.local/fetch_agent",
 		headers: {"APP-AUTH": "aW9zX2N1c3RvbWVyX2FwcDpUUFhAMjAxNg=="},
 		data : {
-			consignments : $jsonConsignment,
-			totalPrice :total,
-			agent:$Agent
+			'consignments' : $jsonConsignment,
+			'totalPrice' :totalPrice,
+			'agent':$Agent
 		},
 		success: function(data){
 
@@ -133,9 +163,10 @@ $('#mainSubmit').click(function(e) {
                 console.log(data);
             }
         });
-	console.log( $jsonConsignment);
-	console.log(total);
-	console.log($Agent);
+	console.log($jsonConsignment);
+	console.log("Price :"+totalPrice);
+	console.log("Cod :"+totalCod);
+	console.log("Agent :"+$Agent);
 	//alert($Agent);
 });
 $('#reset').click(function(e) {  
@@ -151,7 +182,6 @@ $.ajax({
 			availableTags.push({"label" :value['full_name'],"id":value['user_no']});
 		});
 	},
-
 	error: function(data){
                 // Something went wrong
                 // HERE you can handle asynchronously the response 
@@ -166,6 +196,7 @@ $( "#tags" ).autocomplete({
 		$Agent=ui.item.id; 
 	}
 });
+availableTags.push({"label" : "تهران","id" : '1'});
 console.log(availableTags);
 $("form").submit(function (e) {
 	agentNotExist=true;
@@ -192,6 +223,8 @@ $("form").submit(function (e) {
 	}
 	if ($id.substr(0,7)!=5410000 || $id.substr(14,3)!=101 ){
 		toastr.error('فرمت بارنامه درست نیست');
+		$('input[name=consignment]').val("");
+		$('input[name=consignment]').focus();
 		isValid=false;
 	}else{
 		isValid=true;
@@ -200,22 +233,25 @@ $("form").submit(function (e) {
 		var tblId =$(this).find("td:eq(1)").text();
 		if (tblId ==$id) {
 			toastr.error('بارنامه تکراری است !');
+			$('input[name=consignment]').val("");
+			$('input[name=consignment]').focus();
 			isExist=true;
 		}
 	});
 	if ($('#tags').val()=="") {
 		toastr.error('نماینده را مشخص کنید !');
+		$('#tags').select();
 		return 0 ;
 	}
 	$.each(availableTags, function(key, value)
 	{
 		if ($('#tags').val()==value['label']) {
 			agentNotExist=false;
-
 		}
 	});
 	if (agentNotExist==true) {
 		toastr.error('نماینده وجود ندارد !');
+		$('#tags').select();
 		return 0 ;
 	}
 	if (isValid==true && isExist==false && agentNotExist==false) {
@@ -233,22 +269,22 @@ $("form").submit(function (e) {
 						value.TermsOfPayment="پس کرایه";
 					}
 					value.consignment=$id;
-					mytable.row.add([rownum,value.consignment,value.InvValue,value.fld_Total_Cost,value.TermsOfPayment,$sender,"<button name="+'"'+$id+'"'+"class="+'"'+"button"+'"'+">حذف</button>"]);
+					mytable.row.add([rownum,value.consignment,value.TermsOfPayment,$sender,value.InvValue,value.fld_Total_Cost,(parseInt(value.fld_Total_Cost)+parseInt(value.InvValue)),"<button name="+'"'+$id+'"'+"class="+'"'+"button"+'"'+">حذف</button>"]);
 					mytable.order([ 0, 'desc']).draw();
 					rownum++;
-					price[$id] = value.price;
+					price[$id] = value.fld_Total_Cost;
+					cod[$id]=value.InvValue;
 					$("#tags").attr("disabled", "disabled");
 				}else{
 					toastr.error('بارنامه ای با این شماره ثبت نشده است');
+					$('input[name=consignment]').select();
 					return 0 ;
-				
-			}},
+
+				}},
 				fail: function (result) { alert('Fail'); 
 			}
-		
-	});
+		});
 		$('input[name=consignment]').val("");
 		$('input[name=consignment]').focus();
 	}
-
 });
