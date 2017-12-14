@@ -222,27 +222,30 @@ $("form").submit(function (e) {
 		$.ajax({
 			type: "GET",
 			url: 'http://localhost/Barname/api.php',
-			data: {
-				id : $id
-			},
+			data: {'id': $id},
 			dataType: "json",
 			contentType: "application/json; charset=utf-8",
 			success: function (value) {
-				if (value.TermsOfPayment==0) {
+				if (value.notFound==false) {
+					if (value.TermsOfPayment==0) {
 						value.TermsOfPayment="پیش کرایه";
-				}else{
+					}else{
 						value.TermsOfPayment="پس کرایه";
-				}
-				value.consignment=$id;
-				mytable.row.add([rownum,value.consignment,value.InvValue,value.fld_Total_Cost,value.TermsOfPayment,$sender,"<button name="+'"'+$id+'"'+"class="+'"'+"button"+'"'+">حذف</button>"]);
-				mytable.order([ 0, 'desc']).draw();
-				rownum++;
-				price[$id] = value.price;
-				$("#tags").attr("disabled", "disabled"); 
-
-			},
-			failure: function (result) { alert('Fail'); 
-		}
+					}
+					value.consignment=$id;
+					mytable.row.add([rownum,value.consignment,value.InvValue,value.fld_Total_Cost,value.TermsOfPayment,$sender,"<button name="+'"'+$id+'"'+"class="+'"'+"button"+'"'+">حذف</button>"]);
+					mytable.order([ 0, 'desc']).draw();
+					rownum++;
+					price[$id] = value.price;
+					$("#tags").attr("disabled", "disabled");
+				}else{
+					toastr.error('بارنامه ای با این شماره ثبت نشده است');
+					return 0 ;
+				
+			}},
+				fail: function (result) { alert('Fail'); 
+			}
+		
 	});
 		$('input[name=consignment]').val("");
 		$('input[name=consignment]').focus();
