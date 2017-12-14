@@ -133,7 +133,7 @@ $('#mainSubmit').click(function(e) {
                 console.log(data);
             }
         });
-	console.log( $json);
+	console.log( $jsonConsignment);
 	console.log(total);
 	console.log($Agent);
 	//alert($Agent);
@@ -221,18 +221,20 @@ $("form").submit(function (e) {
 	if (isValid==true && isExist==false && agentNotExist==false) {
 		$.ajax({
 			type: "GET",
-			url: 'http://ip.jsontest.com/',
+			url: 'http://localhost/Barname/api.php',
 			data: {
 				id : $id
 			},
 			dataType: "json",
 			contentType: "application/json; charset=utf-8",
 			success: function (value) {
-				value.price = 2620000;
-				value.cod = "2620000"+" ریال";
+				if (value.TermsOfPayment==0) {
+						value.TermsOfPayment="پیش کرایه";
+				}else{
+						value.TermsOfPayment="پس کرایه";
+				}
 				value.consignment=$id;
-				value.peymentTerm="پس کرایه";
-				mytable.row.add([rownum,value.consignment, value.cod,value.price+" ریال",value.peymentTerm,$sender,"<button name="+'"'+$id+'"'+"class="+'"'+"button"+'"'+">حذف</button>"]);
+				mytable.row.add([rownum,value.consignment,value.InvValue,value.fld_Total_Cost,value.TermsOfPayment,$sender,"<button name="+'"'+$id+'"'+"class="+'"'+"button"+'"'+">حذف</button>"]);
 				mytable.order([ 0, 'desc']).draw();
 				rownum++;
 				price[$id] = value.price;
