@@ -163,10 +163,10 @@ $('#mainSubmit').click(function(e) {
                 console.log(data);
             }
         });
-	console.log($jsonConsignment);
+	/*console.log($jsonConsignment);
 	console.log("Price :"+totalPrice);
 	console.log("Cod :"+totalCod);
-	console.log("Agent :"+$Agent);
+	console.log("Agent :"+$Agent);*/
 	//alert($Agent);
 });
 $('#reset').click(function(e) {  
@@ -196,8 +196,6 @@ $( "#tags" ).autocomplete({
 		$Agent=ui.item.id; 
 	}
 });
-availableTags.push({"label" : "تهران","id" : '1'});
-console.log(availableTags);
 $("form").submit(function (e) {
 	agentNotExist=true;
 	var isExist=false;
