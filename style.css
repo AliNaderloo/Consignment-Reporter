@@ -1,6 +1,6 @@
 body{
 	font-family: BYekan;
-	margin: 0 auto; text-align: center;background-color: #212121;
+	margin: 0 auto; text-align: center;
 	transition-delay: 1s; /* delays for 1 second */
   -webkit-transition-delay: 1s; /* for Safari & Chrome */
 }
@@ -15,7 +15,6 @@ margin-top: 10px;direction: rtl;text-align: right;
   height: 30px;
   width:100px;
   color: white;
-  background-color: cadetblue;
   line-height: 32px;
   border-radius: 4px;
   display: inline-block;
@@ -35,7 +34,6 @@ margin-top: 10px;direction: rtl;text-align: right;
 html, 
 body {
   height: 100vh;
-  background-color: darkcyan;
 }
 .input{
 	height: 30px; width: 160px;padding-left: 10px;padding-right: 10px;font-size: 16px;border-radius: 6px;border: 2px solid #0778c4;
