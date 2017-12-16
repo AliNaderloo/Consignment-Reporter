@@ -157,25 +157,6 @@ $(document).on('confirmation', '#modal', function () {
 		totalCod+=parseInt(value);
 	});
 	$jsonConsignment=JSON.stringify(consignment);
-	$.ajax({
-		method: "POST",
-		url: "http://api.parschapar.local/fetch_agent",
-		headers: {"APP-AUTH": "aW9zX2N1c3RvbWVyX2FwcDpUUFhAMjAxNg=="},
-		data : {
-			'consignments' : $jsonConsignment,
-			'totalPrice' :totalPrice,
-			'agent':$Agent
-		},
-		success: function(data){
-
-		},
-		error: function(data){
-                // Something went wrong
-                // HERE you can handle asynchronously the response 
-                // Log in the console
-                //console.log(data);
-            }
-        });
 /*	console.log($jsonConsignment);
 	console.log("Price :"+totalPrice);
 	console.log("Cod :"+totalCod);
@@ -200,7 +181,7 @@ $('#reset').click(function(e) {
 });
 $.ajax({
 	method: "POST",
-	url: "http://api.parschapar.local/fetch_agent",
+	url: "http://api.chaparnet.com/fetch_agent",
 	headers: {"APP-AUTH": "aW9zX2N1c3RvbWVyX2FwcDpUUFhAMjAxNg=="},
 	success: function(data){
 		$.each(data['objects']['user'], function(key, value)
