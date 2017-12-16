@@ -14,6 +14,7 @@ var totalPrice=0;
 var totalCod=0;
 var availableTags =  [];
 var agentNotExist=false;
+
 var colors = ['steelblue', 'salmon', 'lightcoral', 'cadetblue', 'dimgray', 'cornflowerblue', 'indianred', 'lightseagreen','#0881A3','#C06C84'];
 color = colors[Math.floor(Math.random() * colors.length)];
 String.prototype.toEnDigit = function() {
@@ -124,13 +125,23 @@ $('#submit').click(function(e) {
 			totalCod+=parseInt(value);
 		});
 		$("a[href='modal']").attr('disabled', false);
-		$('#numberTotalPrice').text(totalPrice);
-		$('#numberTotalCod').text(totalCod);
-		
+		var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',');
+		$('#numberTotalPrice').animateNumber(
+		{
+			number: totalPrice,
+			numberStep: comma_separator_number_step
+		}
+		);
+		$('#numberTotalCod').animateNumber(
+		{
+			number: totalCod,
+			numberStep: comma_separator_number_step
+		}
+		);
 	}
 	
 });
-$('#mainSubmit').click(function(e) { 
+$(document).on('confirmation', '#modal', function () {
 	var consignment=[];
 	totalPrice=0;
 	totalCod=0;
@@ -160,15 +171,20 @@ $('#mainSubmit').click(function(e) {
                 // Something went wrong
                 // HERE you can handle asynchronously the response 
                 // Log in the console
-                console.log(data);
+                //console.log(data);
             }
         });
-	/*console.log($jsonConsignment);
+/*	console.log($jsonConsignment);
 	console.log("Price :"+totalPrice);
 	console.log("Cod :"+totalCod);
-	console.log("Agent :"+$Agent);*/
+	console.log("Agent :"+$Agent);
+	rownum=1;
+	mytable.clear().draw();
+	$("#tags").removeAttr("disabled");*/
 	//alert($Agent);
+	location.reload();
 });
+
 $('#reset').click(function(e) {  
 	location.reload();
 });
@@ -186,7 +202,7 @@ $.ajax({
                 // Something went wrong
                 // HERE you can handle asynchronously the response 
                 // Log in the console
-                console.log(data);
+                //console.log(data);
             }
         });
 $( "#tags" ).autocomplete({
