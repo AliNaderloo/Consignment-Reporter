@@ -97,7 +97,7 @@ $('#tblItems').on('click', 'button', function()
 	$target=$(this).parent().parent();
 	delete 	price[$btnId];
 	delete  cod[$btnId];
-	$target.hide('slow', function(){ $target.remove(); 
+	$target.hide('slow', function(){ mytable.row( $target ).remove().draw(); 
 		if ($('#tblItems tbody tr').length==0) {
 			mytable.clear().draw();
 			$("#tags").removeAttr("disabled"); 
@@ -115,6 +115,7 @@ $('#submit').click(function(e) {
 		var consignment=[];
 		totalPrice=0;
 		totalCod=0;
+		 var countRows=mytable.rows().count();
 		$.each(price, function(key, value)
 		{
 			totalPrice+=parseInt(value);
@@ -124,6 +125,7 @@ $('#submit').click(function(e) {
 		{
 			totalCod+=parseInt(value);
 		});
+		$('#countRows').text(countRows);
 		$("a[href='modal']").attr('disabled', false);
 		var comma_separator_number_step = $.animateNumber.numberStepFactories.separator(',');
 		$('#numberTotalPrice').animateNumber(
@@ -182,9 +184,17 @@ $(document).on('confirmation', '#modal', function () {
 	mytable.clear().draw();
 	$("#tags").removeAttr("disabled");*/
 	//alert($Agent);
-	location.reload();
+	//location.reload();
+	var inst = $('[data-remodal-id=modal1]').remodal();
+	inst.open();
+	rownum=1;
+	mytable.clear().draw();
+	var consignment=[];
+	totalPrice=0;
+	totalCod=0;
+	$("#tags").removeAttr("disabled");
+	$('input[name=consignment]').focus();
 });
-
 $('#reset').click(function(e) {  
 	location.reload();
 });
@@ -213,6 +223,8 @@ $( "#tags" ).autocomplete({
 	}
 });
 $("form").submit(function (e) {
+	e.preventDefault();
+	$('input[name=consignment]').attr('disabled', true);
 	agentNotExist=true;
 	var isExist=false;
 	e.preventDefault();
@@ -223,6 +235,7 @@ $("form").submit(function (e) {
 	var	$id = $('input[name=consignment]').val().toEnDigit();
 	if ($id=="") {
 		toastr.error('شماره بارنامه را وارد کنید !');
+		$('input[name=consignment]').removeAttr("disabled"); 
 		return 0;
 	}
 	if (!$isSenderSet) {
@@ -233,6 +246,7 @@ $("form").submit(function (e) {
 	$isSenderSet=true;
 	if ($newSender !="" && $sender != $newSender) {
 		toastr.error('نماینده ی جدیدی انتخاب کردید !');
+		$('input[name=consignment]').removeAttr("disabled"); 
 		return 0 ;
 	}
 	if ($id.substr(0,7)!=5410000 || $id.substr(14,3)!=101 ){
@@ -247,6 +261,7 @@ $("form").submit(function (e) {
 		var tblId =$(this).find("td:eq(1)").text();
 		if (tblId ==$id) {
 			toastr.error('بارنامه تکراری است !');
+			$('input[name=consignment]').removeAttr("disabled"); 
 			$('input[name=consignment]').val("");
 			$('input[name=consignment]').focus();
 			isExist=true;
@@ -255,6 +270,7 @@ $("form").submit(function (e) {
 	if ($('#tags').val()=="") {
 		toastr.error('نماینده را مشخص کنید !');
 		$('#tags').select();
+		$('input[name=consignment]').removeAttr("disabled"); 
 		return 0 ;
 	}
 	$.each(availableTags, function(key, value)
@@ -266,6 +282,7 @@ $("form").submit(function (e) {
 	if (agentNotExist==true) {
 		toastr.error('نماینده وجود ندارد !');
 		$('#tags').select();
+		$('input[name=consignment]').removeAttr("disabled"); 
 		return 0 ;
 	}
 	if (isValid==true && isExist==false && agentNotExist==false) {
@@ -289,16 +306,18 @@ $("form").submit(function (e) {
 					price[$id] = value.fld_Total_Cost;
 					cod[$id]=value.InvValue;
 					$("#tags").attr("disabled", "disabled");
+					$('input[name=consignment]').removeAttr("disabled"); 
+					$('input[name=consignment]').val("");
+					$('input[name=consignment]').focus();
 				}else{
 					toastr.error('بارنامه ای با این شماره ثبت نشده است');
-					$('input[name=consignment]').select();
-					return 0 ;
+					$('input[name=consignment]').removeAttr("disabled"); 
+					$('input[name=consignment]').val("");
+					$('input[name=consignment]').focus();
 
 				}},
 				fail: function (result) { alert('Fail'); 
 			}
 		});
-		$('input[name=consignment]').val("");
-		$('input[name=consignment]').focus();
 	}
 });

@@ -50,6 +50,23 @@
 		</div>
 
 	</div>
+	<div class="remodal" id="modal" data-remodal-id="modal">
+	<button data-remodal-action="close" class="remodal-close"></button>
+	<h2>ثبت نهایی بارنامه ها</h2>
+	<h4>تعداد : <span id="countRows" style="color: #66bb6a;font-size: 30px;"></span></h4>
+	<div style="width: 100%;margin-bottom: 35px;margin-top: 30px">
+		<div style="float: left;width: 50%;height: 320px;padding: 2px;"	>
+			<h2>جمع کل کالای امانی</h2>
+			<p style="font-size: 12px;margin-top: 90px">ریال&nbsp;<span  style="font-size: 23px;color: #66bb6a" id="numberTotalCod"></span></p>
+		</div>
+		<div style="width: 50%;height: 320px;padding: 2px;border-left: 2px solid #66bb6a">
+			<h2>جمع کل هزینه</h2>
+			<p style="font-size: 12px;margin-top: 90px">ریال&nbsp;<span style="font-size: 23px;color: #66bb6a" id="numberTotalPrice"></span></p>
+		</div>
+	</div>
+	<button data-remodal-action="cancel" class="remodal-cancel">انصراف</button>
+	<button data-remodal-action="confirm" class="remodal-confirm">ثبت نهایی</button>
+</div>
 </body>
 <footer>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -62,19 +79,8 @@
 	<script type="text/javascript" src="script.js"></script>
 </footer>
 </html>
-<div class="remodal" id="modal" data-remodal-id="modal">
+<div class="remodal" id="modal1" data-remodal-id="modal1">
 	<button data-remodal-action="close" class="remodal-close"></button>
-	<h2>ثبت نهایی بارنامه ها</h2>
-	<div style="width: 100%;margin-bottom: 35px;margin-top: 30px">
-		<div style="float: left;width: 50%;height: 320px;padding: 2px;"	>
-			<h2>جمع کل کالای امانی</h2>
-			<p style="font-size: 19px;margin-top: 90px">ریال&nbsp;<span  style="font-size: 23px;color: #66bb6a" id="numberTotalCod"></span></p>
-		</div>
-		<div style="width: 50%;height: 320px;padding: 2px;border-left: 2px solid #66bb6a">
-			<h2>جمع کل هزینه</h2>
-			<p style="font-size: 19px;margin-top: 90px">ریال&nbsp;<span style="font-size: 23px;color: #66bb6a" id="numberTotalPrice"></span></p>
-		</div>
-	</div>
-	<button data-remodal-action="cancel" class="remodal-cancel">انصراف</button>
-	<button data-remodal-action="confirm" id="mainSubmit" class="remodal-confirm">ثبت نهایی</button>
+	<h2 >با موفقیت ثبت شد</h2><img style="height: 160px;
+    width: 160px;" src="check-circle.gif">
 </div>
