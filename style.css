@@ -5,7 +5,7 @@ body{
   -webkit-transition-delay: 1s; /* for Safari & Chrome */
 }
 .ui-widget input{
-  height: 30px; width: 160px;padding-left: 10px;padding-right: 10px;font-size: 14px;border-radius: 6px;border: 2px solid #0778c4;
+  height: 30px; width: 220px;padding-left: 10px;padding-right: 10px;font-size: 18px;border-radius: 6px;border: 2px solid #0778c4;
 margin-top: 10px;direction: rtl;text-align: right;
 }
 #submit{
@@ -36,7 +36,7 @@ body {
   height: 100vh;
 }
 .input{
-	height: 30px; width: 160px;padding-left: 10px;padding-right: 10px;font-size: 16px;border-radius: 6px;border: 2px solid #0778c4;
+	height: 30px; width: 220px;padding-left: 10px;padding-right: 10px;font-size: 18px;border-radius: 6px;border: 2px solid #0778c4;
 }
 .input[name="consignment"]{
 	direction: ltr;text-align: left;

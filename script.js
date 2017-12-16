@@ -1,4 +1,3 @@
-
 var rownum=1;
 var sum="";
 var $sender="";
@@ -98,7 +97,7 @@ $('#tblItems').on('click', 'button', function()
 	delete 	price[$btnId];
 	delete  cod[$btnId];
 	$target.hide('slow', function(){ mytable.row( $target ).remove().draw(); 
-		if ($('#tblItems tbody tr').length==0) {
+		if (mytable.rows().count()==0) {
 			mytable.clear().draw();
 			$("#tags").removeAttr("disabled"); 
 			rownum=1;
@@ -115,7 +114,7 @@ $('#submit').click(function(e) {
 		var consignment=[];
 		totalPrice=0;
 		totalCod=0;
-		 var countRows=mytable.rows().count();
+		var countRows=mytable.rows().count();
 		$.each(price, function(key, value)
 		{
 			totalPrice+=parseInt(value);
@@ -157,6 +156,25 @@ $(document).on('confirmation', '#modal', function () {
 		totalCod+=parseInt(value);
 	});
 	$jsonConsignment=JSON.stringify(consignment);
+	$.ajax({
+		method: "POST",
+		url: "http://api.parschapar.local/fetch_agent",
+		headers: {"APP-AUTH": "aW9zX2N1c3RvbWVyX2FwcDpUUFhAMjAxNg=="},
+		data : {
+			'consignments' : $jsonConsignment,
+			'totalPrice' :totalPrice,
+			'agent':$Agent
+		},
+		success: function(data){
+
+		},
+		error: function(data){
+                // Something went wrong
+                // HERE you can handle asynchronously the response 
+                // Log in the console
+                //console.log(data);
+            }
+        });
 /*	console.log($jsonConsignment);
 	console.log("Price :"+totalPrice);
 	console.log("Cod :"+totalCod);
@@ -181,12 +199,12 @@ $('#reset').click(function(e) {
 });
 $.ajax({
 	method: "POST",
-	url: "http://api.chaparnet.com/fetch_agent",
+	url: "http://api.parschapar.local/fetch_agent",
 	headers: {"APP-AUTH": "aW9zX2N1c3RvbWVyX2FwcDpUUFhAMjAxNg=="},
 	success: function(data){
 		$.each(data['objects']['user'], function(key, value)
 		{
-			availableTags.push({"label" :value['full_name'],"id":value['user_no']});
+			availableTags.push({"label" :value['full_name']+" ("+value['user_no']+")","id":value['user_no']});
 		});
 	},
 	error: function(data){
@@ -201,6 +219,8 @@ $( "#tags" ).autocomplete({
 	select: function(event,ui){
 		$(this).val((ui.item ? ui.item.label : ""));
 		$Agent=ui.item.id; 
+		$('input[name=consignment]').focus();
+		$('input[name=consignment]').select();
 	}
 });
 $("form").submit(function (e) {

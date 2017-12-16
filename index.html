@@ -12,16 +12,18 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remodal/1.1.1/remodal.min.css" integrity="sha256-NIskOH7eNIjyJFpUeh3DlE9n1amcG/bzVKbWxuIgiH4=" crossorigin="anonymous" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remodal/1.1.1/remodal-default-theme.min.css" integrity="sha256-iJlvlQFv31232zI/zrsL/jbuubLWWr/Bv99d+XfaC7Y=" crossorigin="anonymous" />
 	<title>اسکن بارنامه</title>
+	
 </head>
 <body dir="rtl">
 	<div class="inputContainer">
 		<form method="GET" id="form" action="#" >
-			<label class="label" for="consignment">شماره بارنامه :</label>
-			<input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="input"  type="text" name="consignment" autofocus placeholder="۵۴۱۰۰۰۰&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;۱۰۱">
-			<div class="ui-widget" >
-				<label for="tags" class="label">نماینده : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			
+			<div class="ui-widget" style=" margin-bottom: 10px;">
+				<label for="tags" class="label" autofocus>نماینده : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 				<input id="tags">
 			</div>
+			<label class="label" for="consignment">شماره بارنامه :</label>
+			<input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="input"  type="text" name="consignment"  placeholder="۵۴۱۰۰۰۰&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;۱۰۱">
 			<input type="submit" name="submit" style="display: none;">
 		</form>
 	</div>
@@ -60,7 +62,7 @@
 			<p style="font-size: 12px;margin-top: 90px">ریال&nbsp;<span  style="font-size: 23px;color: #66bb6a" id="numberTotalCod"></span></p>
 		</div>
 		<div style="width: 50%;height: 320px;padding: 2px;border-left: 2px solid #66bb6a">
-			<h2>جمع کل هزینه</h2>
+			<h2>جمع کل کرایه حمل</h2>
 			<p style="font-size: 12px;margin-top: 90px">ریال&nbsp;<span style="font-size: 23px;color: #66bb6a" id="numberTotalPrice"></span></p>
 		</div>
 	</div>
